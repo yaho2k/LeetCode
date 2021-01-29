@@ -1,4 +1,4 @@
-import java.util.HashMap;
+
 
 public class M5_LongestPalindromicSubstring {
 
@@ -31,10 +31,10 @@ public class M5_LongestPalindromicSubstring {
                     if (j < i) {
                         continue;
                     }
-                    if( j - i < max){
+                    if (j - i < max) {
                         continue;
                     }
-                    tmp = check1(schar, i, j);
+                    tmp = check(schar, i, j);
                     if (tmp != 0 && tmp > max) {
                         max = tmp;
                         StringBuffer sb = new StringBuffer();
@@ -48,7 +48,7 @@ public class M5_LongestPalindromicSubstring {
             return maxString;
         }
 
-        private int check1(char[] schar, int start, int end) {
+        private int check(char[] schar, int start, int end) {
             if (start > end) {
                 return 0;
             }
@@ -59,25 +59,6 @@ public class M5_LongestPalindromicSubstring {
                 }
             }
             return end - start + 1;
-        }
-
-        private String check(char[] schar, int start, int end) {
-            if (start > end) {
-                return "";
-            }
-            int length = end - start + 1;
-            for (int i = 0; i < (length) / 2; i++) {
-                if (schar[start + i] != schar[start + length - 1 - i]) {
-                    return "";
-                }
-            }
-            String result;
-            StringBuffer sb = new StringBuffer();
-            for (int i = start; i <= end; i++) {
-                sb.append(schar[i]);
-            }
-            return sb.toString();
-
         }
     }
 }
