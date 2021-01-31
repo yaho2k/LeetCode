@@ -1,13 +1,10 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.TreeMap;
-import java.util.Map.Entry;
 
 public class H987_VerticalOrderTraversalofaBinaryTree {
     /*
@@ -25,24 +22,15 @@ public class H987_VerticalOrderTraversalofaBinaryTree {
      */
 
     /*
-     * [3,9,20,null,null,15,7] [1,2,3,4,5,6,7] [1] [0,null,1,2,3,null,null,4,5]
-     * [0,5,1,9,null,2,null,null,null,null,3,4,8,6,null,null,null,7] [1,2,3,4,5,6,7]
+     * [3,9,20,null,null,15,7]
+     * [1,2,3,4,5,6,7]
+     * [1]
+     * [0,null,1,2,3,null,null,4,5]
+     * [0,5,1,9,null,2,null,null,null,null,3,4,8,6,null,null,null,7]
+     * [1,2,3,4,5,6,7]
      */
 
-    public static void main(String[] args) {
-        TreeNode root = new TreeNode(0);
-        root.right = new TreeNode(1);
-        root.right.left = new TreeNode(2);
-        root.right.right = new TreeNode(3);
-        root.right.right.left = new TreeNode(4);
-        root.right.right.right = new TreeNode(5);
-
-        Solution sol = new Solution();
-        sol.verticalTraversal(root);
-
-    }
-
-    static public class TreeNode {
+    public class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
@@ -61,7 +49,7 @@ public class H987_VerticalOrderTraversalofaBinaryTree {
         }
     }
 
-    static class Solution {
+    class Solution {
 
         class Node {
             TreeNode node;
@@ -78,7 +66,6 @@ public class H987_VerticalOrderTraversalofaBinaryTree {
         HashMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> hashmap = new HashMap<>();
         int minX = 0;
         int maxX = 0;
-        int minY = 0;
 
         public List<List<Integer>> verticalTraversal(TreeNode root) {
             bfs(root);
@@ -97,7 +84,6 @@ public class H987_VerticalOrderTraversalofaBinaryTree {
                 }
                 result.add(list);
             }
-
             return result;
         }
 
@@ -116,29 +102,23 @@ public class H987_VerticalOrderTraversalofaBinaryTree {
                 for (int i = 0; i < size; i++) {
                     Node node = que.poll();
                     TreeMap<Integer, PriorityQueue<Integer>> nodehashSet = hashmap.get(node.x);
-                    if (nodehashSet != null) {
-                        PriorityQueue<Integer> pri = nodehashSet.get(-node.y);
-                        if (pri == null) {
-                            pri = new PriorityQueue<>();
-                        }
-                        pri.add(node.node.val);
-                        nodehashSet.put(-node.y, pri);
-                        hashmap.put(node.x, nodehashSet);
-                    } else {
-                        TreeMap<Integer, PriorityQueue<Integer>> nodehashSetnew = new TreeMap<>();
-                        PriorityQueue<Integer> pri = new PriorityQueue<>();
-                        pri.add(node.node.val);
-                        nodehashSetnew.put(-node.y, pri);
-                        hashmap.put(node.x, nodehashSetnew);
+
+                    if(nodehashSet == null){
+                        nodehashSet = new TreeMap<>();
                     }
+                    PriorityQueue<Integer> pri = nodehashSet.get(-node.y);
+                    if (pri == null) {
+                        pri = new PriorityQueue<>();
+                    }
+                    pri.add(node.node.val);
+                    nodehashSet.put(-node.y, pri);
+                    hashmap.put(node.x, nodehashSet);
+
                     if (node.x > maxX) {
                         maxX = node.x;
                     }
                     if (node.x < minX) {
                         minX = node.x;
-                    }
-                    if (node.y < minY) {
-                        minY = node.y;
                     }
                     if (node.node.left != null) {
                         que.add(new Node(node.node.left, node.x - 1, node.y - 1));
