@@ -26,8 +26,7 @@ public class M17_LetterCombinationsofaPhoneNumber {
     static class Solution {
 
         char phones[][] = { {}, {}, { 'a', 'b', 'c' }, { 'd', 'e', 'f' }, { 'g', 'h', 'i' }, { 'j', 'k', 'l' },
-                { 'm', 'n', 'o' },  { 'p', 'q', 'r', 's' }, { 't', 'u', 'v', 'w' },
-                { 'x', 'y', 'z' } };
+                { 'm', 'n', 'o' }, { 'p', 'q', 'r', 's' }, { 't', 'u', 'v' }, { 'w', 'x', 'y', 'z' } };
         List<String> results = new ArrayList<>();
 
         public List<String> letterCombinations(String digits) {
